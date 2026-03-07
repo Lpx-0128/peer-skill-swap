@@ -12,15 +12,15 @@ export function ExploreScreen({ peers, categories, activeCategory, setActiveCate
     const filteredPeers = peers.filter((peer: Peer) => {
         if (peer.connected) return false;
 
-        const matchesSearch = peer.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            peer.skillsToTeach.some(s => s.toLowerCase().includes(searchQuery.toLowerCase())) ||
-            peer.skillsToLearn.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
+        const matchesSearch = (peer.username || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+            peer.skillsToTeach?.some(s => s.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            peer.skillsToLearn?.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
 
         const matchesCategory = activeCategory === 'All Students' ||
-            peer.skillsToTeach.some(s => s.toLowerCase().includes(activeCategory.toLowerCase())) ||
+            peer.skillsToTeach?.some(s => s.toLowerCase().includes(activeCategory.toLowerCase())) ||
             (peer.badge && peer.badge.toLowerCase().includes(activeCategory.toLowerCase()));
 
-        return matchesSearch && matchesCategory;
+        return (matchesSearch || false) && (matchesCategory || false);
     });
 
     return (
