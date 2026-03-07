@@ -19,7 +19,7 @@ export function ProfileScreen({ user, onEdit, onLogout }: { user: User, onEdit: 
                 <div className="flex flex-col items-center py-8">
                     <div className="relative">
                         <div className="size-32 rounded-full border-4 border-purple-500/20 p-1 bg-white/5">
-                            <Avatar src={user.avatarUrl} alt={user.name} className="w-full h-full rounded-full" />
+                            <Avatar src={user.avatarUrl} alt={user.username} className="w-full h-full rounded-full" />
                         </div>
                     </div>
                 </div>
@@ -31,10 +31,10 @@ export function ProfileScreen({ user, onEdit, onLogout }: { user: User, onEdit: 
                     >
                         <div className="flex justify-between items-start">
                             <div className="space-y-4 flex-1">
-                                <ProfileField label="Full Name" value={user.name} />
+                                <ProfileField label="Username" value={user.username} />
                                 {user.bio && <ProfileField label="Bio" value={user.bio} />}
                                 <ProfileField label="Contact Number" value={user.contactNumber} />
-                                <ProfileField label="University Email" value={user.universityEmail} />
+                                <ProfileField label="Email" value={user.email} />
                             </div>
                             <ArrowRight className="size-5 text-purple-500/50 group-hover:text-purple-500 transition-colors mt-1" />
                         </div>

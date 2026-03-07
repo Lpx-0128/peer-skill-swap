@@ -58,7 +58,7 @@ export function LoginScreen({ onBack, onLoginSuccess, onSignUp }: { onBack: () =
             </div>
 
             <div className="space-y-6">
-                <InputField label="University Email" placeholder="yourname@university.edu" type="email" icon={<Mail className="size-5" />} value={email} onChange={setEmail} />
+                <InputField label="Email" placeholder="yourname@example.com" type="email" icon={<Mail className="size-5" />} value={email} onChange={setEmail} />
                 <InputField
                     label="Password"
                     placeholder="Enter your password"

@@ -16,10 +16,10 @@ export function PeersScreen({ peers, onSwap }: { peers: Peer[], onSwap: (p: Peer
                 {peers.map((peer) => (
                     <div key={peer.id} className="bg-[#120b1a] rounded-[2.5rem] border border-white/10 p-6 shadow-lg">
                         <div className="flex items-center gap-4 mb-5">
-                            <Avatar src={peer.avatarUrl} alt={peer.name} className="size-16 rounded-full ring-2 ring-purple-500/20" />
+                            <Avatar src={peer.avatarUrl} alt={peer.username} className="size-16 rounded-full ring-2 ring-purple-500/20" />
                             <div className="flex-1">
                                 <div className="flex justify-between items-center">
-                                    <h3 className="font-bold text-xl">{peer.name}</h3>
+                                    <h3 className="font-bold text-xl">{peer.username}</h3>
                                     <span className="text-[10px] uppercase tracking-widest text-green-400 font-bold bg-green-400/10 px-3 py-1 rounded-full border border-green-400/20">Connected</span>
                                 </div>
                                 <p className="text-slate-400 text-sm mt-1">
@@ -30,7 +30,7 @@ export function PeersScreen({ peers, onSwap }: { peers: Peer[], onSwap: (p: Peer
                         <div className="bg-black/40 rounded-3xl p-4 flex flex-col gap-3 border border-white/5">
                             <div className="flex items-center gap-3">
                                 <Mail className="size-4 text-purple-500" />
-                                <a href={`mailto:${peer.universityEmail}`} className="text-[15px] font-medium text-slate-100">{peer.universityEmail}</a>
+                                <a href={`mailto:${peer.email}`} className="text-[15px] font-medium text-slate-100">{peer.email}</a>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Phone className="size-4 text-purple-500" />

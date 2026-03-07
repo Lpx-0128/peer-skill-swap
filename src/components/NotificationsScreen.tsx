@@ -39,14 +39,14 @@ export function NotificationsScreen({ notifications, onBack, onAccept, onDecline
                             <div key={notif.id} className="bg-[#120b1a] rounded-2xl border border-white/10 p-5 shadow-xl shadow-black/20">
                                 <div className="flex items-start gap-4 mb-4">
                                     <div className="relative flex-shrink-0">
-                                        <Avatar src={notif.sender.avatarUrl} alt={notif.sender.name} className="size-14 rounded-full border-2 border-purple-500/50" />
+                                        <Avatar src={notif.sender.avatarUrl} alt={notif.sender.username} className="size-14 rounded-full border-2 border-purple-500/50" />
                                         <div className="absolute -bottom-1 -right-1 bg-purple-600 size-5 rounded-full flex items-center justify-center border-2 border-[#120b1a]">
                                             {isSwapMedia ? <Camera className="size-3 text-white fill-white" /> : <Bolt className="size-3 text-white fill-white" />}
                                         </div>
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex justify-between items-start gap-2">
-                                            <h3 className="font-bold text-lg truncate">{notif.sender.name}</h3>
+                                            <h3 className="font-bold text-lg truncate">{notif.sender.username}</h3>
                                             <span className={cn(
                                                 "text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-full whitespace-nowrap",
                                                 isSwapMedia ? "text-sky-400 bg-sky-400/10" : "text-purple-500 bg-purple-500/10"
@@ -70,7 +70,7 @@ export function NotificationsScreen({ notifications, onBack, onAccept, onDecline
                                     <div className="bg-black/20 rounded-xl p-3.5 flex items-start gap-3 mb-5 border border-dashed border-white/10">
                                         <EyeOff className="size-4 text-slate-500 mt-0.5" />
                                         <p className="text-xs text-slate-400 leading-relaxed italic">
-                                            Contact info is hidden. Accept to reveal {notif.sender.name.split(' ')[0]}'s email and phone number.
+                                            Contact info is hidden. Accept to reveal {notif.sender.username}'s email and phone number.
                                         </p>
                                     </div>
                                 )}

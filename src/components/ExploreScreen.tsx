@@ -12,7 +12,7 @@ export function ExploreScreen({ peers, categories, activeCategory, setActiveCate
     const filteredPeers = peers.filter((peer: Peer) => {
         if (peer.connected) return false;
 
-        const matchesSearch = peer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        const matchesSearch = peer.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
             peer.skillsToTeach.some(s => s.toLowerCase().includes(searchQuery.toLowerCase())) ||
             peer.skillsToLearn.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
 
@@ -87,7 +87,7 @@ export function ExploreScreen({ peers, categories, activeCategory, setActiveCate
     );
 }
 
-function PeerCard({ peer, isExpanded, onToggle, onConnect }: { peer: Peer, isExpanded: boolean, onToggle: () => void, onConnect: (id: string) => void }) {
+function PeerCard({ peer, isExpanded, onToggle, onConnect }: { peer: Peer, isExpanded: boolean, onToggle: () => void, onConnect: (id: string) => void, key?: string }) {
     return (
         <motion.div
             layout
@@ -107,9 +107,9 @@ function PeerCard({ peer, isExpanded, onToggle, onConnect }: { peer: Peer, isExp
             )}
 
             <div className={cn("flex gap-3 mb-4", isExpanded ? "flex-col items-center text-center mt-4" : "items-center")}>
-                <Avatar src={peer.avatarUrl} alt={peer.name} className={cn("rounded-full border border-purple-500/30", isExpanded ? "size-20" : "w-9 h-9")} />
+                <Avatar src={peer.avatarUrl} alt={peer.username} className={cn("rounded-full border border-purple-500/30", isExpanded ? "size-20" : "w-9 h-9")} />
                 <div className="flex-1">
-                    <span className={cn("font-bold block", isExpanded ? "text-xl mt-2" : "text-sm truncate")}>{peer.name}</span>
+                    <span className={cn("font-bold block", isExpanded ? "text-xl mt-2" : "text-sm truncate")}>{peer.username}</span>
                     {isExpanded && peer.badge && (
                         <div className={cn(
                             "inline-block px-2 py-0.5 rounded border mt-1",

@@ -34,7 +34,7 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState('All Students');
   const [loading, setLoading] = useState(true);
   const [activeConnectionId, setActiveConnectionId] = useState<string | null>(null);
-  const [activeConnectionPeerName, setActiveConnectionPeerName] = useState<string>('');
+  const [activeConnectionPeerUsername, setActiveConnectionPeerUsername] = useState<string>('');
   const [activePeerId, setActivePeerId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -105,8 +105,8 @@ export default function App() {
 
     const formattedUser: User = {
       id: profile.id,
-      name: profile.name,
-      universityEmail: profile.university_email,
+      username: profile.username,
+      email: profile.email,
       contactNumber: profile.contact_number,
       bio: profile.bio || '',
       avatarUrl: profile.avatar_url || '',
@@ -153,8 +153,8 @@ export default function App() {
 
       return {
         id: p.id,
-        name: p.name,
-        universityEmail: p.university_email,
+        username: p.username,
+        email: p.email,
         contactNumber: p.contact_number,
         bio: p.bio || '',
         avatarUrl: p.avatar_url || '',
@@ -216,8 +216,8 @@ export default function App() {
         connection_id: n.connection_id,
         sender: {
           id: n.sender.id,
-          name: n.sender.name,
-          universityEmail: n.sender.university_email,
+          username: n.sender.username,
+          email: n.sender.email,
           contactNumber: n.sender.contact_number,
           bio: n.sender.bio || '',
           avatarUrl: n.sender.avatar_url || '',
@@ -317,7 +317,7 @@ export default function App() {
 
               if (data) {
                 setActiveConnectionId(data.id);
-                setActiveConnectionPeerName(peer.name);
+                setActiveConnectionPeerUsername(peer.username);
                 setActivePeerId(peer.id);
                 setCurrentScreen('swap');
               }
@@ -364,7 +364,7 @@ export default function App() {
             }}
             onViewSwap={async (notif) => {
               setActiveConnectionId(notif.connection_id!);
-              setActiveConnectionPeerName(notif.sender.name);
+              setActiveConnectionPeerUsername(notif.sender.username);
               setActivePeerId(notif.sender_id);
               await supabase.from('notifications').update({ is_read: true }).eq('id', notif.id);
               fetchNotifications();
@@ -378,7 +378,7 @@ export default function App() {
             onBack={() => setCurrentScreen('peers')}
             connectionId={activeConnectionId!}
             currentUserId={user!.id}
-            peerName={activeConnectionPeerName}
+            peerUsername={activeConnectionPeerUsername}
             peerId={activePeerId!}
           />
         );

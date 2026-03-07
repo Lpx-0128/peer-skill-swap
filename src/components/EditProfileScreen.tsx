@@ -63,10 +63,10 @@ export function EditProfileScreen({ user, onBack, onSave }: { user: User, onBack
             const { error: profileError } = await supabase
                 .from('profiles')
                 .update({
-                    name: editedUser.name,
+                    username: editedUser.username,
                     bio: editedUser.bio,
                     contact_number: editedUser.contactNumber,
-                    university_email: editedUser.universityEmail,
+                    email: editedUser.email,
                     avatar_url: editedUser.avatarUrl
                 })
                 .eq('id', user.id);
@@ -168,9 +168,9 @@ export function EditProfileScreen({ user, onBack, onSave }: { user: User, onBack
 
                     <div className="space-y-6">
                         <EditField
-                            label="Full Name"
-                            value={editedUser.name}
-                            onChange={(v) => setEditedUser({ ...editedUser, name: v })}
+                            label="Username"
+                            value={editedUser.username}
+                            onChange={(v) => setEditedUser({ ...editedUser, username: v })}
                         />
                         <div className="space-y-2">
                             <label className="text-[10px] font-bold text-purple-500 uppercase tracking-[0.2em]">Bio</label>
@@ -186,9 +186,9 @@ export function EditProfileScreen({ user, onBack, onSave }: { user: User, onBack
                             onChange={(v) => setEditedUser({ ...editedUser, contactNumber: v })}
                         />
                         <EditField
-                            label="University Email"
-                            value={editedUser.universityEmail}
-                            onChange={(v) => setEditedUser({ ...editedUser, universityEmail: v })}
+                            label="Email"
+                            value={editedUser.email}
+                            onChange={(v) => setEditedUser({ ...editedUser, email: v })}
                         />
                         <div className="space-y-2">
                             <label className="text-[10px] font-bold text-purple-500 uppercase tracking-[0.2em]">Change Password</label>

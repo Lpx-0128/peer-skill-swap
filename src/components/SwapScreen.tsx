@@ -8,7 +8,7 @@ import { PageWrapper } from './PageWrapper';
 import { MediaContent } from './MediaContent';
 import { extractSwapMediaPath } from '../utils/media';
 
-export function SwapScreen({ onBack, connectionId, currentUserId, peerName, peerId }: { onBack: () => void, connectionId: string, currentUserId: string, peerName: string, peerId: string }) {
+export function SwapScreen({ onBack, connectionId, currentUserId, peerUsername, peerId }: { onBack: () => void, connectionId: string, currentUserId: string, peerUsername: string, peerId: string }) {
     const [media, setMedia] = useState<string | null>(null);
     const [file, setFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -147,7 +147,7 @@ export function SwapScreen({ onBack, connectionId, currentUserId, peerName, peer
                         </div>
                         <h2 className="text-3xl font-bold mb-4">Skill Shared!</h2>
                         <p className="text-slate-400 text-lg leading-relaxed">
-                            Your media has been shared with {peerName}.
+                            Your media has been shared with {peerUsername}.
                         </p>
                         <motion.div
                             initial={{ width: 0 }}
@@ -163,7 +163,7 @@ export function SwapScreen({ onBack, connectionId, currentUserId, peerName, peer
                 <button onClick={onBack} className="text-slate-100 flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors">
                     <ChevronLeft className="size-6" />
                 </button>
-                <h1 className="text-white text-lg font-bold tracking-tight flex-1 text-center pr-10">Swap with {peerName}</h1>
+                <h1 className="text-white text-lg font-bold tracking-tight flex-1 text-center pr-10">Swap with {peerUsername}</h1>
             </header>
 
 
@@ -264,7 +264,7 @@ export function SwapScreen({ onBack, connectionId, currentUserId, peerName, peer
                                         <h3 className="font-bold text-lg">{item.title}</h3>
                                         <p className="text-slate-400 text-sm mt-1">{item.description}</p>
                                         <p className="text-[10px] text-slate-600 uppercase font-bold mt-4 tracking-widest">
-                                            {item.uploader_id === currentUserId ? 'You shared this' : `${peerName} shared this`} • {new Date(item.created_at).toLocaleDateString()}
+                                            {item.uploader_id === currentUserId ? 'You shared this' : `${peerUsername} shared this`} • {new Date(item.created_at).toLocaleDateString()}
                                         </p>
                                     </div>
                                 </div>

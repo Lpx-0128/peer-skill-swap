@@ -7,7 +7,7 @@ import { InputField } from './InputField';
 import { SkillSelector } from './SkillSelector';
 
 export function SignUpScreen({ onBack, onSignUpSuccess, onLogin }: { onBack: () => void, onSignUpSuccess: () => void, onLogin: () => void }) {
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -16,15 +16,13 @@ export function SignUpScreen({ onBack, onSignUpSuccess, onLogin }: { onBack: () 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const nameError = name.length > 0 && name.length < 8 ? "Name must be at least 8 characters" : "";
     const passwordError = password.length > 0 && /[a-zA-Z]/.test(password) ? "Password must only contain numbers" : "";
     const phoneError = phone.length > 0 && /[a-zA-Z]/.test(phone) ? "Contact number must only contain numbers" : "";
 
-    const isFormValid = name.trim() !== '' &&
+    const isFormValid = username.trim() !== '' &&
         password.trim() !== '' &&
         email.trim() !== '' &&
         phone.trim() !== '' &&
-        !nameError &&
         !passwordError &&
         !phoneError;
 
@@ -39,7 +37,7 @@ export function SignUpScreen({ onBack, onSignUpSuccess, onLogin }: { onBack: () 
                 password,
                 options: {
                     data: {
-                        name,
+                        username,
                     }
                 }
             });
@@ -94,14 +92,13 @@ export function SignUpScreen({ onBack, onSignUpSuccess, onLogin }: { onBack: () 
             <div className="space-y-6 flex-grow">
                 <div className="space-y-4">
                     <InputField
-                        label="Full Name"
-                        placeholder="John Doe"
+                        label="Username"
+                        placeholder="john_doe"
                         icon={<UserIcon className="size-5" />}
-                        value={name}
-                        onChange={setName}
-                        error={nameError}
+                        value={username}
+                        onChange={setUsername}
                     />
-                    <InputField label="University Email" placeholder="john@university.edu" type="email" icon={<Mail className="size-5" />} value={email} onChange={setEmail} />
+                    <InputField label="Email" placeholder="john@example.com" type="email" icon={<Mail className="size-5" />} value={email} onChange={setEmail} />
                     <InputField
                         label="Password"
                         placeholder="••••••••"

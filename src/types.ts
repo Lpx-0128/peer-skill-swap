@@ -14,8 +14,8 @@ export interface SwapOffering {
 
 export interface User {
     id: string;
-    name: string;
-    universityEmail: string;
+    username: string;
+    email: string;
     contactNumber: string;
     skillsToTeach: Skill[];
     skillsToLearn: Skill[];
