@@ -23,7 +23,7 @@ Through a digital marketplace of skills, students can list what they can teach (
 Our team followed a structured Software Development Life Cycle (SDLC) to ensure the project was delivered systematically:
 
 ### 1. Planning & Requirements
-We utilized **Trello** as our primary project management tool. We began by defining our User Stories and a Product Backlog. Following an **Agile-inspired approach**, we prioritized core features like User Authentication and the Connection System to ensure a functional Minimum Viable Product (MVP).
+We utilized Trello as our primary project management tool. We began by defining our User Stories and a Product Backlog. Following an Agile-inspired approach, we prioritized core features like User Authentication and the Connection System to ensure a functional Minimum Viable Product (MVP). Besides, we separated the development process into two sprint phases. The first sprint focused on building the initial version of the system and gathering user feedback, while the second sprint focused on implementing improvements and enhancing the overall user experience based on the feedback received.
 
 ### 2. Design
 Our UI/UX Designer, **Jun Hom**, utilized **Figma** to create high-fidelity wireframes and interactive prototypes. We focused on a "Mobile-First" design philosophy, ensuring the interface was intuitive for students who are constantly on the move around campus. The design focuses on high-contrast elements and smooth transitions (using Framer Motion) to provide a premium user experience.
