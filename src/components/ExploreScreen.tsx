@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Bell, X, Trophy, GraduationCap } from 'lucide-react';
+import { Search, Bell, X, Trophy, GraduationCap, Star } from 'lucide-react';
 import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
 import { Peer } from '../types';
@@ -110,6 +110,26 @@ function PeerCard({ peer, isExpanded, onToggle, onConnect }: { peer: Peer, isExp
                 <Avatar src={peer.avatarUrl} alt={peer.username} className={cn("rounded-full border border-purple-500/30", isExpanded ? "size-20" : "w-9 h-9")} />
                 <div className="flex-1">
                     <span className={cn("font-bold block", isExpanded ? "text-xl mt-2" : "text-sm truncate")}>{peer.username}</span>
+                    {!isExpanded && (peer.ratingCount ?? 0) > 0 && (
+                        <div className="flex items-center gap-0.5 mt-0.5">
+                            <Star className="size-3 fill-amber-400 text-amber-400" />
+                            <span className="text-xs font-bold text-amber-400">{peer.averageRating?.toFixed(1)}</span>
+                            <span className="text-[10px] text-slate-600 ml-0.5">({peer.ratingCount})</span>
+                        </div>
+                    )}
+                    {isExpanded && (
+                        <div className="flex items-center justify-center gap-1 mt-1">
+                            {(peer.ratingCount ?? 0) > 0 ? (
+                                <>
+                                    <Star className="size-3.5 fill-amber-400 text-amber-400" />
+                                    <span className="text-sm font-bold text-amber-400">{peer.averageRating?.toFixed(1)}</span>
+                                    <span className="text-xs text-slate-500">· {peer.ratingCount} {peer.ratingCount === 1 ? 'rating' : 'ratings'}</span>
+                                </>
+                            ) : (
+                                <span className="text-xs text-slate-600">No ratings yet</span>
+                            )}
+                        </div>
+                    )}
                     {isExpanded && peer.badge && (
                         <div className={cn(
                             "inline-block px-2 py-0.5 rounded border mt-1",

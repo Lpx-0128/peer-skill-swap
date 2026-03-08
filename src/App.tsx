@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { cn } from './lib/utils';
 import { supabase } from './lib/supabaseClient';
-import { User, Peer, Notification } from './types';
+import { User, Peer, Notification, Rating } from './types';
 
 // Components
 import { SplashScreen } from './components/SplashScreen';
@@ -19,6 +19,7 @@ import { ProfileScreen } from './components/ProfileScreen';
 import { EditProfileScreen } from './components/EditProfileScreen';
 import { NotificationsScreen } from './components/NotificationsScreen';
 import { SwapScreen } from './components/SwapScreen';
+import { RatingModal } from './components/RatingModal';
 
 // Utils
 import { extractSwapMediaPath } from './utils/media';
@@ -36,6 +37,8 @@ export default function App() {
   const [activeConnectionId, setActiveConnectionId] = useState<string | null>(null);
   const [activeConnectionPeerUsername, setActiveConnectionPeerUsername] = useState<string>('');
   const [activePeerId, setActivePeerId] = useState<string | null>(null);
+  const [ratingModalPeer, setRatingModalPeer] = useState<Peer | null>(null);
+  const [ratings, setRatings] = useState<Rating[]>([]);
 
   useEffect(() => {
     // Check active session
@@ -103,6 +106,21 @@ export default function App() {
       return;
     }
 
+    // Fetch ratings received by this user (for own profile display)
+    const { data: receivedRatings } = await supabase
+      .from('ratings')
+      .select('*')
+      .eq('ratee_id', userId);
+
+    let averageRating: number | undefined;
+    let ratingCount = receivedRatings?.length ?? 0;
+    if (ratingCount > 0 && receivedRatings) {
+      const sum = receivedRatings.reduce((acc: number, r: any) => {
+        return acc + (r.teaching_quality + r.responsiveness + r.reliability) / 3;
+      }, 0);
+      averageRating = sum / ratingCount;
+    }
+
     const formattedUser: User = {
       id: profile.id,
       username: profile.username,
@@ -117,7 +135,9 @@ export default function App() {
         title: a.title,
         subtitle: a.subtitle,
         type: a.type
-      }))
+      })),
+      averageRating,
+      ratingCount,
     };
 
     setUser(formattedUser);
@@ -145,11 +165,33 @@ export default function App() {
       console.error('Error fetching connections:', connError);
     }
 
+    // Fetch all ratings relevant to the current user (given or received)
+    const { data: allRatings } = await supabase
+      .from('ratings')
+      .select('*');
+
+    const fetchedRatings: Rating[] = allRatings ?? [];
+    setRatings(fetchedRatings);
+
     const formattedPeers: Peer[] = profiles.map((p: any) => {
       const conn = connections?.find(c =>
         (c.sender_id === user.id && c.receiver_id === p.id) ||
         (c.receiver_id === user.id && c.sender_id === p.id)
       );
+
+      // Ratings this peer has received (from anyone)
+      const peerReceivedRatings = fetchedRatings.filter(r => r.ratee_id === p.id);
+      const ratingCount = peerReceivedRatings.length;
+      let averageRating: number | undefined;
+      if (ratingCount > 0) {
+        const sum = peerReceivedRatings.reduce((acc, r) => {
+          return acc + (r.teaching_quality + r.responsiveness + r.reliability) / 3;
+        }, 0);
+        averageRating = sum / ratingCount;
+      }
+
+      // Has current user already rated this peer?
+      const hasRated = fetchedRatings.some(r => r.rater_id === user.id && r.ratee_id === p.id);
 
       return {
         id: p.id,
@@ -171,7 +213,10 @@ export default function App() {
         swapOffering: conn?.status === 'accepted' ? {
           teach: conn.sender_id === p.id ? conn.swap_teach : conn.swap_learn,
           learn: conn.sender_id === p.id ? conn.swap_learn : conn.swap_teach
-        } : undefined
+        } : undefined,
+        averageRating,
+        ratingCount,
+        hasRated,
       };
     });
 
@@ -251,6 +296,11 @@ export default function App() {
 
   const categories = ['All Students', 'Design', 'Coding', 'Music', 'Business'];
 
+  // Find an existing rating that current user gave to ratingModalPeer
+  const existingRating = ratingModalPeer
+    ? ratings.find(r => r.rater_id === user?.id && r.ratee_id === ratingModalPeer.id) ?? null
+    : null;
+
   const renderScreen = () => {
     switch (currentScreen) {
       case 'splash':
@@ -322,6 +372,7 @@ export default function App() {
                 setCurrentScreen('swap');
               }
             }}
+            onRate={(peer: Peer) => setRatingModalPeer(peer)}
           />
         );
       case 'profile':
@@ -428,6 +479,18 @@ export default function App() {
           </nav>
         </div>
       )}
+
+      {/* Rating Modal — rendered outside the screen router so it overlays everything */}
+      <RatingModal
+        peer={ratingModalPeer}
+        currentUserId={user?.id ?? ''}
+        existingRating={existingRating}
+        onClose={() => setRatingModalPeer(null)}
+        onRatingSubmitted={() => {
+          fetchPeers();
+          if (user) fetchUserData(user.id);
+        }}
+      />
     </div>
   );
 }

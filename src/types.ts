@@ -12,6 +12,16 @@ export interface SwapOffering {
     learn: string;
 }
 
+export interface Rating {
+    id: string;
+    rater_id: string;
+    ratee_id: string;
+    teaching_quality: number;
+    responsiveness: number;
+    reliability: number;
+    created_at: string;
+}
+
 export interface User {
     id: string;
     username: string;
@@ -22,6 +32,8 @@ export interface User {
     bio: string;
     avatarUrl: string;
     achievements: Achievement[];
+    averageRating?: number;
+    ratingCount?: number;
 }
 
 export interface Peer extends User {
@@ -29,6 +41,7 @@ export interface Peer extends User {
     requestSent?: boolean;
     badge?: string;
     swapOffering?: SwapOffering;
+    hasRated?: boolean;
 }
 
 export interface Notification {

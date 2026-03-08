@@ -1,10 +1,24 @@
 import React from 'react';
-import { Users, Mail, Phone, Repeat } from 'lucide-react';
+import { Users, Mail, Phone, Repeat, Star } from 'lucide-react';
 import { Peer } from '../types';
 import { PageWrapper } from './PageWrapper';
 import { Avatar } from './Avatar';
+import { cn } from '../lib/utils';
 
-export function PeersScreen({ peers, onSwap }: { peers: Peer[], onSwap: (p: Peer) => void }) {
+function RatingDisplay({ averageRating, ratingCount }: { averageRating?: number; ratingCount?: number }) {
+    if (!ratingCount || ratingCount === 0) {
+        return <span className="text-xs text-slate-600 font-medium">No ratings yet</span>;
+    }
+    return (
+        <div className="flex items-center gap-1">
+            <Star className="size-3.5 fill-amber-400 text-amber-400" />
+            <span className="text-sm font-bold text-amber-400">{averageRating?.toFixed(1)}</span>
+            <span className="text-xs text-slate-500">· {ratingCount} {ratingCount === 1 ? 'rating' : 'ratings'}</span>
+        </div>
+    );
+}
+
+export function PeersScreen({ peers, onSwap, onRate }: { peers: Peer[], onSwap: (p: Peer) => void, onRate: (p: Peer) => void }) {
     return (
         <PageWrapper noTopPadding>
             <header className="sticky top-0 z-50 bg-[#0a0510]/80 backdrop-blur-md border-b border-white/10 px-4 py-5 flex items-center gap-3">
@@ -15,7 +29,7 @@ export function PeersScreen({ peers, onSwap }: { peers: Peer[], onSwap: (p: Peer
             <main className="p-4 flex flex-col gap-6 pb-32">
                 {peers.map((peer) => (
                     <div key={peer.id} className="bg-[#120b1a] rounded-[2.5rem] border border-white/10 p-6 shadow-lg">
-                        <div className="flex items-center gap-4 mb-5">
+                        <div className="flex items-center gap-4 mb-3">
                             <Avatar src={peer.avatarUrl} alt={peer.username} className="size-16 rounded-full ring-2 ring-purple-500/20" />
                             <div className="flex-1">
                                 <div className="flex justify-between items-center">
@@ -25,6 +39,9 @@ export function PeersScreen({ peers, onSwap }: { peers: Peer[], onSwap: (p: Peer
                                 <p className="text-slate-400 text-sm mt-1">
                                     Swap: <span className="text-white font-semibold">{peer.swapOffering?.teach}</span> for <span className="text-white font-semibold">{peer.swapOffering?.learn}</span>
                                 </p>
+                                <div className="mt-1.5">
+                                    <RatingDisplay averageRating={peer.averageRating} ratingCount={peer.ratingCount} />
+                                </div>
                             </div>
                         </div>
                         <div className="bg-black/40 rounded-3xl p-4 flex flex-col gap-3 border border-white/5">
@@ -37,13 +54,27 @@ export function PeersScreen({ peers, onSwap }: { peers: Peer[], onSwap: (p: Peer
                                 <a href={`tel:${peer.contactNumber}`} className="text-[15px] font-medium text-slate-100">{peer.contactNumber}</a>
                             </div>
                         </div>
-                        <button
-                            onClick={() => onSwap(peer)}
-                            className="w-full mt-4 bg-purple-600 text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 hover:bg-purple-500 active:scale-[0.98] transition-all"
-                        >
-                            <Repeat className="size-5" />
-                            Swap
-                        </button>
+                        <div className="flex gap-3 mt-4">
+                            <button
+                                onClick={() => onSwap(peer)}
+                                className="flex-1 bg-purple-600 text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 hover:bg-purple-500 active:scale-[0.98] transition-all"
+                            >
+                                <Repeat className="size-5" />
+                                Swap
+                            </button>
+                            <button
+                                onClick={() => onRate(peer)}
+                                className={cn(
+                                    "flex-1 font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all border",
+                                    peer.hasRated
+                                        ? "bg-amber-400/10 border-amber-400/30 text-amber-400 hover:bg-amber-400/20"
+                                        : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
+                                )}
+                            >
+                                <Star className={cn("size-4", peer.hasRated ? "fill-amber-400 text-amber-400" : "text-slate-400")} />
+                                {peer.hasRated ? 'Rated' : 'Rate'}
+                            </button>
+                        </div>
                     </div>
                 ))}
                 {peers.length === 0 && (

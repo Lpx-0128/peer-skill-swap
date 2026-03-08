@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trophy, GraduationCap, X, ArrowRight } from 'lucide-react';
+import { Trophy, GraduationCap, X, ArrowRight, Star } from 'lucide-react';
 import { User } from '../types';
 import { PageWrapper } from './PageWrapper';
 import { Avatar } from './Avatar';
@@ -21,6 +21,23 @@ export function ProfileScreen({ user, onEdit, onLogout }: { user: User, onEdit: 
                         <div className="size-32 rounded-full border-4 border-purple-500/20 p-1 bg-white/5">
                             <Avatar src={user.avatarUrl} alt={user.username} className="w-full h-full rounded-full" />
                         </div>
+                    </div>
+                    {/* Rating display */}
+                    <div className="mt-4 flex items-center gap-2">
+                        {(user.ratingCount ?? 0) > 0 ? (
+                            <>
+                                {[1,2,3,4,5].map(s => (
+                                    <Star
+                                        key={s}
+                                        className={`size-5 ${ s <= Math.round(user.averageRating ?? 0) ? 'fill-amber-400 text-amber-400' : 'fill-transparent text-slate-700'}`}
+                                    />
+                                ))}
+                                <span className="text-lg font-bold text-amber-400 ml-1">{user.averageRating?.toFixed(1)}</span>
+                                <span className="text-sm text-slate-500">· {user.ratingCount} {user.ratingCount === 1 ? 'rating' : 'ratings'}</span>
+                            </>
+                        ) : (
+                            <span className="text-sm text-slate-600 font-medium">No ratings yet</span>
+                        )}
                     </div>
                 </div>
 
