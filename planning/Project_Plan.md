@@ -1,0 +1,7 @@
+# Project Plan
+
+The project plan for **SkillSwap** follows a well defined Software Development Life Cycle (SDLC) based on **Agile methodology** and focuses on the development of increments. This framework ensures the provision of functionality via successive and validated increments to help achieve the efficient integration of faculty knowledge domains in furthering the course of **Sustainable Development Goal No. 4 - Quality Education**.
+
+The project is organized into iterative cycles where the team works collaboratively to evolve the software from a Minimum Viable Product (MVP) to a feature-rich application. Roles are strategically assigned to ensure full coverage of the SDLC. **Luke Roy Peter** serves as the **Team Lead**, overseeing documentation and project trajectory. **Loh Chun Hoong** manages **Requirement Analysis and Testing**, ensuring the software meets academic standards. **Lai Jun Hom** handles the **UI/UX Design**, focusing on a mobile-first user experience. **Lee Ping Xian** is responsible for **Backend Development**, managing the integration of data services. To maintain operational efficiency, **Low Jia Wei** manages the **Trello Backlog**, ensuring that every development increment is tracked and delivered on time.
+
+Incorporating the use of an incremental model allows the team to incrementally improve the application through constant internal review and feedback. This is an overarching Strategy for the SDLC that ensures SkillSwap is robust and scalable and effectively delivered within the community.
