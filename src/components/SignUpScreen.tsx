@@ -38,6 +38,9 @@ export function SignUpScreen({ onBack, onSignUpSuccess, onLogin }: { onBack: () 
                 options: {
                     data: {
                         username,
+                        full_name: username, // Fallback for old triggers
+                        university_email: email, // Fallback for old triggers
+                        phone: phone, // Fallback for old triggers
                     }
                 }
             });
@@ -73,6 +76,7 @@ export function SignUpScreen({ onBack, onSignUpSuccess, onLogin }: { onBack: () 
                 onSignUpSuccess();
             }
         } catch (err: any) {
+            console.error('Sign up error:', err);
             setError(err.message || 'An error occurred during sign up');
         } finally {
             setLoading(false);
