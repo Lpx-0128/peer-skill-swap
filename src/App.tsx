@@ -128,9 +128,9 @@ export default function App() {
       contactNumber: profile.contact_number,
       bio: profile.bio || '',
       avatarUrl: profile.avatar_url || '',
-      skillsToTeach: profile.skills.filter((s: any) => s.type === 'teach').map((s: any) => s.skill_name),
-      skillsToLearn: profile.skills.filter((s: any) => s.type === 'learn').map((s: any) => s.skill_name),
-      achievements: profile.achievements.map((a: any) => ({
+      skillsToTeach: (profile.skills || []).filter((s: any) => s.type === 'teach').map((s: any) => s.skill_name),
+      skillsToLearn: (profile.skills || []).filter((s: any) => s.type === 'learn').map((s: any) => s.skill_name),
+      achievements: (profile.achievements || []).map((a: any) => ({
         id: a.id,
         title: a.title,
         subtitle: a.subtitle,
@@ -200,14 +200,14 @@ export default function App() {
         contactNumber: p.contact_number,
         bio: p.bio || '',
         avatarUrl: p.avatar_url || '',
-        skillsToTeach: p.skills.filter((s: any) => s.type === 'teach').map((s: any) => s.skill_name),
-        skillsToLearn: p.skills.filter((s: any) => s.type === 'learn').map((s: any) => s.skill_name),
-        achievements: p.achievements?.map((a: any) => ({
+        skillsToTeach: (p.skills || []).filter((s: any) => s.type === 'teach').map((s: any) => s.skill_name),
+        skillsToLearn: (p.skills || []).filter((s: any) => s.type === 'learn').map((s: any) => s.skill_name),
+        achievements: (p.achievements || []).map((a: any) => ({
           id: a.id,
           title: a.title,
           subtitle: a.subtitle,
           type: a.type
-        })) || [],
+        })),
         connected: conn?.status === 'accepted',
         requestSent: conn?.status === 'pending' && conn.sender_id === user.id,
         swapOffering: conn?.status === 'accepted' ? {
@@ -266,8 +266,8 @@ export default function App() {
           contactNumber: n.sender.contact_number,
           bio: n.sender.bio || '',
           avatarUrl: n.sender.avatar_url || '',
-          skillsToTeach: n.sender.skills.filter((s: any) => s.type === 'teach').map((s: any) => s.skill_name),
-          skillsToLearn: n.sender.skills.filter((s: any) => s.type === 'learn').map((s: any) => s.skill_name),
+          skillsToTeach: (n.sender.skills || []).filter((s: any) => s.type === 'teach').map((s: any) => s.skill_name),
+          skillsToLearn: (n.sender.skills || []).filter((s: any) => s.type === 'learn').map((s: any) => s.skill_name),
           achievements: [],
           connected: false
         }
@@ -309,7 +309,12 @@ export default function App() {
         return (
           <SignUpScreen
             onBack={() => setCurrentScreen('splash')}
-            onSignUpSuccess={() => setCurrentScreen('explore')}
+            onSignUpSuccess={() => {
+              supabase.auth.getSession().then(({ data: { session } }) => {
+                if (session) fetchUserData(session.user.id);
+              });
+              setCurrentScreen('explore');
+            }}
             onLogin={() => setCurrentScreen('login')}
           />
         );

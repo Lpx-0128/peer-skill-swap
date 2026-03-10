@@ -23,6 +23,8 @@ export function SignUpScreen({ onBack, onSignUpSuccess, onLogin }: { onBack: () 
         password.trim() !== '' &&
         email.trim() !== '' &&
         phone.trim() !== '' &&
+        teachSkills.length > 0 &&
+        learnSkills.length > 0 &&
         !passwordError &&
         !phoneError;
 

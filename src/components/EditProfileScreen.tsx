@@ -14,6 +14,10 @@ export function EditProfileScreen({ user, onBack, onSave }: { user: User, onBack
     const [newAch, setNewAch] = useState({ title: '', subtitle: '', type: 'award' as 'award' | 'education' });
     const [loading, setLoading] = useState(false);
 
+    const isFormValid = editedUser.username.trim() !== '' &&
+        editedUser.skillsToTeach.length > 0 &&
+        editedUser.skillsToLearn.length > 0;
+
     const handleAddAchievement = () => {
         if (newAch.title && newAch.subtitle) {
             setEditedUser({
@@ -117,7 +121,14 @@ export function EditProfileScreen({ user, onBack, onSave }: { user: User, onBack
                 </div>
                 <h1 className="text-lg font-bold tracking-tight text-center">Edit Profile</h1>
                 <div className="flex justify-end">
-                    <button onClick={handleSave} disabled={loading} className="text-purple-500 text-sm font-bold">
+                    <button
+                        onClick={handleSave}
+                        disabled={loading || !isFormValid}
+                        className={cn(
+                            "text-sm font-bold transition-colors",
+                            loading || !isFormValid ? "text-slate-600 cursor-not-allowed" : "text-purple-500 hover:text-purple-400"
+                        )}
+                    >
                         {loading ? 'Saving...' : 'Save'}
                     </button>
                 </div>
@@ -335,9 +346,15 @@ function SkillEditor({ label, skills, onRemove, onAdd }: { label: string, skills
                 <label className="text-[10px] font-bold text-purple-500 uppercase tracking-[0.2em]">{label}</label>
                 <button
                     onClick={() => setIsAdding(true)}
-                    className="text-purple-500 text-[10px] font-bold flex items-center gap-1 border border-purple-500/30 rounded-full px-3 py-1 bg-purple-500/5 hover:bg-purple-500/10 transition-colors"
+                    disabled={skills.length >= 5}
+                    className={cn(
+                        "text-[10px] font-bold flex items-center gap-1 border rounded-full px-3 py-1 transition-colors",
+                        skills.length >= 5
+                            ? "text-slate-600 border-slate-800 bg-slate-900 cursor-not-allowed"
+                            : "text-purple-500 border-purple-500/30 bg-purple-500/5 hover:bg-purple-500/10"
+                    )}
                 >
-                    <Plus className="size-3" /> Add Skill
+                    <Plus className="size-3" /> {skills.length >= 5 ? 'Limit Reached' : 'Add Skill'}
                 </button>
             </div>
 
@@ -363,7 +380,13 @@ function SkillEditor({ label, skills, onRemove, onAdd }: { label: string, skills
                             />
                             <button
                                 onClick={handleAdd}
-                                className="bg-purple-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-purple-500 transition-colors"
+                                disabled={skills.length >= 5}
+                                className={cn(
+                                    "px-4 py-2 rounded-xl text-xs font-bold transition-colors",
+                                    skills.length >= 5
+                                        ? "bg-slate-800 text-slate-500 cursor-not-allowed"
+                                        : "bg-purple-600 text-white hover:bg-purple-500"
+                                )}
                             >
                                 Add
                             </button>

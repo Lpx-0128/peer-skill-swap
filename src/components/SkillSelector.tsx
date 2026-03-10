@@ -9,7 +9,7 @@ export function SkillSelector({ label, color, suggestions, activeSkills: initial
 
     const addSkill = (skill: string) => {
         const trimmed = skill.trim();
-        if (trimmed && !skills.includes(trimmed)) {
+        if (trimmed && !skills.includes(trimmed) && skills.length < 5) {
             const newSkills = [...skills, trimmed];
             setSkills(newSkills);
             onChange?.(newSkills);
@@ -57,9 +57,9 @@ export function SkillSelector({ label, color, suggestions, activeSkills: initial
                                 onClick={() => addSkill(s)}
                                 className={cn(
                                     "px-3 py-1.5 rounded-full bg-[#0a0a0c] border border-[#2d2d35] text-xs text-slate-400 hover:border-purple-500/50 hover:text-purple-400 transition-all",
-                                    skills.includes(s) && "opacity-50 cursor-not-allowed"
+                                    (skills.includes(s) || skills.length >= 5) && "opacity-50 cursor-not-allowed"
                                 )}
-                                disabled={skills.includes(s)}
+                                disabled={skills.includes(s) || skills.length >= 5}
                             >
                                 {s}
                             </button>
@@ -68,11 +68,15 @@ export function SkillSelector({ label, color, suggestions, activeSkills: initial
                 </div>
                 <div className="relative border-t border-[#2d2d35] pt-3">
                     <input
-                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-sm text-white placeholder:text-slate-600 outline-none"
-                        placeholder="Add a skill..."
+                        className={cn(
+                            "w-full bg-transparent border-none p-0 focus:ring-0 text-sm text-white placeholder:text-slate-600 outline-none",
+                            skills.length >= 5 && "cursor-not-allowed opacity-50"
+                        )}
+                        placeholder={skills.length >= 5 ? "Maximum skills reached" : "Add a skill..."}
                         type="text"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
+                        disabled={skills.length >= 5}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
