@@ -34,7 +34,6 @@
 ### Reviews & Ratings
 - The system shall allow users to rate their connected peers using a multi-criteria rating system consisting of three categories: Teaching Quality, Responsiveness, and Reliability.
 - The system shall limit each user to one rating per connection (i.e., a user can only rate a specific peer once per connection).
-- The system shall allow users to update their previously submitted rating for a connection.
 - The system shall calculate and display the average rating and the total number of ratings received on each user's profile.
 - The system shall use a numerical scale (e.g., 1 to 5 stars) for each rating criterion.
 
