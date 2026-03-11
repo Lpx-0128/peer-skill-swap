@@ -3,7 +3,7 @@
 ## Project: Peer Skill Swap
 
 ### Sign up
-![Sign up](TC_Sign_up.jpeg)
+![Sign up](TC_Sign_Up.jpeg)
 
 Test Case:
 The system shall require users to select at least one skill they can teach and one skill they want to learn when creating an account.
