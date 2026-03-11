@@ -7,12 +7,12 @@
 
 Google Form Link: https://docs.google.com/forms/d/e/1FAIpQLSfKZf_3NqndZGrLWQFqEn7kyPJP7zkh7RchsD-pXVua3hyKdg/viewform?usp=header
 
-## Overview
+### Overview
 *   **Prototype Version:** 1.0
 *   **Testing Date:** March 2026
 *   **Target Audience:** University Students
 
-## Key Feedback Points
+### Key Feedback Points
 | Category | Observation | Impact |
 | :--- | :--- | :--- |
 | **UI/UX** | Users found the navigation menu slightly confusing. | High |
@@ -21,10 +21,10 @@ Google Form Link: https://docs.google.com/forms/d/e/1FAIpQLSfKZf_3NqndZGrLWQFqEn
 
 ---
 
-## User Age Group Feedback (Diagrams)
+### User Age Group Feedback (Diagrams)
 ![Age Group Feedback](User_Age.jpeg)
 
-## Usability & Experience
+### Usability & Experience
 ![Usability & Experience](Usability.jpeg)
 
 Most difficulty is in the part of using the prototype.
@@ -41,7 +41,7 @@ Favourite about the solution
 - Skill Showcase: The ability to showcase their skills was also a positive aspect.
 
 
-## Impact & Iteration
+### Impact & Iteration
 ![Impact & Iteration](Impact.jpeg)
 
 Suggest ONE specific thing about this app.
