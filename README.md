@@ -9,11 +9,11 @@ SkillSwap helps to support SDG 4 by enabling a platform for inclusive and equita
 ## 👥 The Team
 | Name | Role |
 | :--- | :--- |
-| **Luke Roy Peter** | Team Lead & Documentation |
+| **Luke Roy Peter** | Team Lead & Quality Assurance |
 | **Lee Ping Xian** | Backend Developer |
 | **Lai Jun Hom** | UI/UX Designer |
-| **Loh Chun Hoong** | Software Testing & Requirement Analysis |
-| **Low Jia Wei** | Trello Management & Slides/Pitcher |
+| **Loh Chun Hoong** | Business Analysis |
+| **Low Jia Wei** | Scrum Master & Slides/Pitcher |
 
 ## 📝 Project Description
 **SkillSwap** is a mobile-first web app that is designed for the Taylor's University student community. Our platform has a focus on the "silo" effect, whereby students are usually separated within their own faculties (e.g. a Business student might want to learn basic Coding, but has no way of meeting a Computing student).
@@ -37,7 +37,7 @@ The application was built using a modern tech stack:
 *   **Modular Architecture:** We refactored our code into a modular component structure to ensure maintainability and scalability.
 
 ### 4. Testing & Evaluation
-Under **Chun Hoong’s** lead, our team performed rigorous manual testing. Our evaluation process included:
+Under **Luke’s** lead, our team performed rigorous manual testing. Our evaluation process included:
 *   **User Authentication Testing:** Verifying secure login/signup flows via Supabase.
 *   **Functional Testing:** Ensuring the "Swap" media upload and notification system triggered correctly across different accounts.
 *   **Peer Review:** The group conducted internal code reviews and walkthroughs to identifying UI inconsistencies.
